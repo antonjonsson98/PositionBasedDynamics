@@ -3,13 +3,12 @@
 // (C) 2015-2018 Individual contributors, see AUTHORS file
 //------------------------------------------------------------------------------
 #include "config.h"
-#include "exampleapp.h"
+#include "PBDScene.h"
 
 int
 main(int argc, const char** argv)
 {
-
-	Example::ExampleApp app;
+	PBD::PBDScene app;
 	if (app.Open())
 	{
 		app.Run();

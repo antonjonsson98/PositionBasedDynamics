@@ -3,18 +3,18 @@
 // (C) 2015-2018 Individual contributors, see AUTHORS file
 //------------------------------------------------------------------------------
 #include "config.h"
-#include "exampleapp.h"
+#include "PBDScene.h"
 #include <cstring>
 #include "Matrix4D.h"
 
 using namespace Display;
-namespace Example
+namespace PBD
 {
 
 //------------------------------------------------------------------------------
 /**
 */
-ExampleApp::ExampleApp()
+PBDScene::PBDScene()
 {
 	// empty
 }
@@ -22,9 +22,8 @@ ExampleApp::ExampleApp()
 //------------------------------------------------------------------------------
 /**
 */
-ExampleApp::~ExampleApp()
+PBDScene::~PBDScene()
 {
-	delete lightNode;
 	delete cameraMovement;
 	delete window;
 }
@@ -33,14 +32,12 @@ ExampleApp::~ExampleApp()
 /**
 */
 bool
-ExampleApp::Open()
+PBDScene::Open()
 {
 	App::Open();
 	this->window = new Display::Window;
 	cameraMovement = new CameraMovement();
 	cameraMovement->setWindow(window);
-
-	lightNode = new LightNode(Vector4D(0, 10, 0), Vector4D(1, 1, 1), 1);
 
 	window->SetKeyPressFunction([this](int32 key, int32 scanCode, int32 action, int32 modifier)
 	{
@@ -62,10 +59,8 @@ ExampleApp::Open()
 /**
 */
 void
-ExampleApp::Run()
+PBDScene::Run()
 {
-	float rotation = 0.0f;
-	bool active;
 	Matrix4D perspective = Matrix4D::getPerspectiveMatrix(-0.1, 0.1, 0.1, -0.1, 10000000000000, 0.1f);
 
 	glEnable(GL_DEPTH_TEST);
@@ -98,5 +93,4 @@ ExampleApp::Run()
 
 	}
 }
-
-} // namespace Example
+}
