@@ -1,0 +1,34 @@
+#version 430
+layout(location=0) in vec3 norm;
+layout(location=1) in vec3 Pos;
+layout(location=2) in vec3 uNorm;
+
+out vec4 Color;
+uniform vec4 LightPos;
+uniform vec4 LightColor;
+uniform float Intensity;
+uniform vec4 camPos;
+uniform vec4 color;
+
+
+void main()
+{
+    vec3 lightDir = normalize(vec3(LightPos) - Pos);
+    float diffuseAmount = clamp(dot(lightDir, uNorm), 0, 1);
+    vec3 diffuse = vec3(LightColor) * diffuseAmount * Intensity;
+    
+    vec3 specular;
+    if(dot(uNorm, lightDir) < 0)
+    {
+        specular = vec3(0, 0, 0);
+    }
+    else
+    {    
+        vec3 viewDir = normalize(vec3(camPos) - Pos);
+        vec3 halfWay = normalize(lightDir + viewDir);
+        float specularAmount = clamp(pow(max(dot(uNorm, halfWay), 0.0), 16), 0, 1);
+        specular = vec3(LightColor) * specularAmount * Intensity;
+    }
+
+	Color = color * (vec4(0.1, 0.1, 0.1, 1) + vec4(diffuse, 1) + vec4(specular, 1)); 
+}

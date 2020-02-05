@@ -1,0 +1,18 @@
+#version 430
+layout(location=0) in vec3 pos;
+layout(location=1) in vec3 norm;
+layout(location=0) out vec3 Norm;
+layout(location=1) out vec3 Pos;
+layout(location=2) out vec3 uNorm;
+
+uniform mat4 transform;
+uniform mat4 view;
+uniform mat4 perspective;
+
+void main()
+{
+	gl_Position = perspective * view * transform * vec4(pos, 1);
+	Norm = norm;
+    Pos = (transform * vec4(pos, 1.0f)).xyz;
+    uNorm = mat3(inverse(transform)) * norm;
+}
