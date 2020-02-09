@@ -30,5 +30,5 @@ void main()
         specular = vec3(LightColor) * specularAmount * Intensity;
     }
 
-	Color = color * (vec4(0.1, 0.1, 0.1, 1) + vec4(diffuse, 1) + vec4(specular, 1)); 
+	Color = color * (vec4(0.1, 0.1, 0.1, 1) + vec4(diffuse, 1) + vec4(specular, 1));
 }

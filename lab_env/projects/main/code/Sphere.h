@@ -28,25 +28,25 @@ inline Sphere::~Sphere()
 
 inline void Sphere::setup()
 {
-    shader->loadVertexShader("VertexShader.txt");
-	shader->loadFragmentShader("FragmentShader.txt");
-	shader->useShaders();
-    glUseProgram(shader->getProgram());
-    mesh->loadFromFile("sphere.obj");
-	mesh->setup();
-	mesh->bindVertexBuffer();
-	mesh->bindIndexBuffer();
+    shader.loadVertexShader("VertexShader.txt");
+	shader.loadFragmentShader("FragmentShader.txt");
+	shader.useShaders();
+    glUseProgram(shader.getProgram());
+    mesh.loadFromFile("sphere.obj");
+	mesh.setup();
+	mesh.bindVertexBuffer();
+	mesh.bindIndexBuffer();
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
-	mesh->drawSetup();
+	mesh.drawSetup();
 }
 
 inline void Sphere::draw()
 {
-    mesh->bindVAO();
+    mesh.bindVAO();
 
-	glUseProgram(shader->getProgram());
+	glUseProgram(shader.getProgram());
 
-	glDrawElements(GL_TRIANGLES, mesh->numIndices(), GL_UNSIGNED_INT, 0);
-	mesh->unbindVAO();
+	glDrawElements(GL_TRIANGLES, mesh.numIndices(), GL_UNSIGNED_INT, 0);
+	mesh.unbindVAO();
 }
