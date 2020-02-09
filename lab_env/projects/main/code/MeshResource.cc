@@ -47,20 +47,8 @@ void MeshResource::drawSetup()
 {
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, (void*) 0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, (void*)(sizeof(GLfloat) * 3));
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, (void*)(sizeof(GLfloat) * 6));
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-}
-
-void MeshResource::debugDrawSetup()
-{
-	// Used for vertex arrays with position only
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 3, (void*) 0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 6, (void*) 0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 6, (void*)(sizeof(GLfloat) * 3));
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -245,64 +233,4 @@ MeshResource * MeshResource::getCubeMesh(Vector4D centerPoint, float width)
 	};
 	MeshResource * r = new MeshResource(vertexBuffer, indexBuffer, 72, 36);
 	return r;
-}
-
-float * MeshResource::getCubeMeshVertexBuffer(Vector4D centerPoint, float width)
-{
-	float hw = width / 2; // Half the width
-	float x = centerPoint[0];
-	float y = centerPoint[1];
-	float z = centerPoint[2];
-
-	return new float[72]
-	{
-		-hw + x,	-hw + y,	-hw + z,		// pos 0
-		0.8,		0.8,		0.8,		1,	// color 0
-		1,			0.9,						// texture coord 0 
-		-hw + x,	hw + y,		-hw + z,		// pos 1
-		1,			0,			0,			1,	// color 1
-		1,			0.1,						// texture coord 1 
-		hw + x,		hw + y,		-hw + z,		// pos 2
-		0,			1,			0,			1,	// color 2
-		0,			0.1,						// texture coord 2
-		hw + x,		-hw + y,	-hw + z,		// pos 3
-		0,			0,			1,			1,	// color 3
-		0,			0.9,						// texture coord 3
-		-hw + x,	-hw + y,	hw + z,			// pos 4
-		0,			1,			0,			1,	// color 4
-		2,			0.9,						// texture coord 4
-		-hw + x,	hw + y,		hw + z,			// pos 5
-		0,			0,			1,			1,	// color 5
-		2,			0.1,						// texture coord 5
-		hw + x,		hw + y,		hw + z,			// pos 6
-		0.8,		0.8,		0.8,		1,	// color 6
-		3,			0.1,						// texture coord 6
-		hw + x,		-hw + y,	hw + z,			// pos 7
-		1,			0,			0,			1,	// color 7
-		3,			0.9,						// texture coord 7
-	};
-}
-
-int * MeshResource::getCubeMeshIndexBuffer(Vector4D centerPoint, float width)
-{
-	float hw = width / 2; // Half the width
-	float x = centerPoint[0];
-	float y = centerPoint[1];
-	float z = centerPoint[2];
-
-	return new int[36]
-	{
-		0, 1, 2,
-		0, 2, 3,
-		4, 0 ,3,
-		4, 3, 7,
-		4, 5, 1,
-		4, 1, 0,
-		5, 1, 2,
-		5, 2, 6,
-		7, 6, 3,
-		6, 2, 3,
-		4, 5, 7,
-		5, 6, 7
-	};
 }
