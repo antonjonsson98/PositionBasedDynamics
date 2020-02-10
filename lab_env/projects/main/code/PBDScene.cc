@@ -61,7 +61,7 @@ PBDScene::Open()
 void
 PBDScene::Run()
 {
-	Particle p = Particle();
+	PBDObject object = PBDObject::getBox(5, 5, 5, 0.5f);
 
     LightNode lightNode = LightNode(Vector4D(0, 10, 0), Vector4D(1, 1, 1), 1);
 
@@ -91,7 +91,7 @@ PBDScene::Run()
 
 		Matrix4D view = Matrix4D::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
-		p.draw(view, perspective, lightNode, cameraPos);
+		object.draw(view, perspective, lightNode, cameraPos);
 
 		Matrix4D identity = Matrix4D::getIdentityMatrix();
 
