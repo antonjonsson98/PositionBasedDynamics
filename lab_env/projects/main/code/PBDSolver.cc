@@ -2,7 +2,7 @@
 
 PBDSolver::PBDSolver()
 {
-    solverSteps = 5;
+    solverSteps = 1;
 }
 
 PBDSolver::~PBDSolver()

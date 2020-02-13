@@ -20,6 +20,10 @@ inline Particle::Particle()
 {
     sphere = Sphere();
     sphere.setup();
+    pos = Vector4D();
+    vel = Vector4D();
+    mass = 0.1f;
+
 }
 
 inline Particle::~Particle()

@@ -14,7 +14,7 @@ public:
     void projectConstraints(int simulationSteps);
     void updateVelocities(float dt);
     void updatePositions();
-    static PBDObject getBox(int w, int h, int d, float invDensity);
+    static PBDObject* getBox(int w, int h, int d, float invDensity);
     int numParticles;
     Particle* particleList;
     Particle* projectedParticleList;
@@ -80,9 +80,9 @@ inline void PBDObject::updatePositions()
 }
 
 
-inline PBDObject PBDObject::getBox(int w, int h, int d, float invDensity)
+inline PBDObject* PBDObject::getBox(int w, int h, int d, float invDensity)
 {
-    PBDObject ret = PBDObject();
+    PBDObject* ret = new PBDObject();
 
     Particle* list = new Particle[w * h * d];
 
@@ -97,7 +97,11 @@ inline PBDObject PBDObject::getBox(int w, int h, int d, float invDensity)
         }    
     }
 
-    ret.setParticleList(list, w * h * d);
+    ret->setParticleList(list, w * h * d);
+
+    ret->particleList[0].vel = Vector4D(1, 0, 0);
+
+    ret->constraints.push_back(new DistanceConstraint(0, 1, ret));
 
     return ret;
 }

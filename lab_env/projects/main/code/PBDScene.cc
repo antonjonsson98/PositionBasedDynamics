@@ -62,8 +62,8 @@ void
 PBDScene::Run()
 {
 	PBDSolver solver = PBDSolver();
-	PBDObject object = PBDObject::getBox(7, 7, 7, 0.5f);
-	solver.addObject(&object);
+	PBDObject* object = PBDObject::getBox(2, 1, 1, 0.5f);
+	solver.addObject(object);
 
 
     LightNode lightNode = LightNode(Vector4D(0, 10, 0), Vector4D(1, 1, 1), 1);
@@ -94,9 +94,9 @@ PBDScene::Run()
 
 		Matrix4D view = Matrix4D::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
-		object.draw(view, perspective, lightNode, cameraPos);
+		solver.simulateTimeStep(0.0167f);
 
-		Matrix4D identity = Matrix4D::getIdentityMatrix();
+		object->draw(view, perspective, lightNode, cameraPos);
 
 		this->window->SwapBuffers();
 

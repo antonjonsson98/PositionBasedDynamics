@@ -14,7 +14,7 @@ protected:
     PBDObject* parent;
 };
 
-class DistanceConstraint : Constraint
+class DistanceConstraint : public Constraint
 {
 public:
     DistanceConstraint(int i1, int i2, PBDObject* obj);
