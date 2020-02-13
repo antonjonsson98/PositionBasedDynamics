@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Particle.h"
+#include "Constraints.h"
 
 class PBDObject
 {
@@ -12,8 +13,10 @@ public:
     static PBDObject getBox(int w, int h, int d, float invDensity);
 
 private:
-    Particle* particleList;
     int numParticles;
+    Particle* particleList;
+    Particle* projectedParticleList;
+    std::vector<Constraint*> constraints;
 };
 
 inline PBDObject::PBDObject()
@@ -25,14 +28,11 @@ inline PBDObject::~PBDObject()
 }
 
 inline void PBDObject::setParticleList(Particle* list, int length)
-{
-    if (particleList)
-    {
-        delete[] particleList;
-    }
-    
-    particleList = list;
+{   
     numParticles = length;
+    particleList = list;
+    projectedParticleList = new Particle[numParticles];
+    memcpy(projectedParticleList, particleList, sizeof(Particle) * numParticles);
 }
 
 inline void PBDObject::draw(Matrix4D view, Matrix4D perspective, LightNode light, Vector4D cameraPos)

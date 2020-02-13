@@ -61,7 +61,7 @@ PBDScene::Open()
 void
 PBDScene::Run()
 {
-	PBDObject object = PBDObject::getBox(5, 5, 5, 0.5f);
+	PBDObject object = PBDObject::getBox(7, 7, 7, 0.5f);
 
     LightNode lightNode = LightNode(Vector4D(0, 10, 0), Vector4D(1, 1, 1), 1);
 
