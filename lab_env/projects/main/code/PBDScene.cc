@@ -61,7 +61,10 @@ PBDScene::Open()
 void
 PBDScene::Run()
 {
+	PBDSolver solver = PBDSolver();
 	PBDObject object = PBDObject::getBox(7, 7, 7, 0.5f);
+	solver.addObject(&object);
+
 
     LightNode lightNode = LightNode(Vector4D(0, 10, 0), Vector4D(1, 1, 1), 1);
 

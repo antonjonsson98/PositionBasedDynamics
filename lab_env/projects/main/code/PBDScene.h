@@ -7,7 +7,7 @@
 #include "GraphicsNode.h"
 #include "CameraMovement.h"
 #include "LightNode.h"
-#include "PBDObject.h"
+#include "PBDSolver.h"
 #include "imgui.h"
 #include "imgui_impl_glfw_gl3.h"
 

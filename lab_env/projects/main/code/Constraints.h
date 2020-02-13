@@ -1,10 +1,10 @@
+#pragma once
+
 class PBDObject;
 
 class Constraint
 {
 public:
-    Constraint();
-    ~Constraint();
     virtual void projectConstraint(int simulationSteps) = 0;
 protected:
     int numIndices;

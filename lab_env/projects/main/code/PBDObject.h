@@ -10,6 +10,10 @@ public:
     ~PBDObject();
     void setParticleList(Particle* list, int length);
     void draw(Matrix4D view, Matrix4D perspective, LightNode light, Vector4D cameraPos);
+    void projectPositions(float dt);
+    void projectConstraints(int simulationSteps);
+    void updateVelocities(float dt);
+    void updatePositions();
     static PBDObject getBox(int w, int h, int d, float invDensity);
     int numParticles;
     Particle* particleList;
@@ -42,6 +46,39 @@ inline void PBDObject::draw(Matrix4D view, Matrix4D perspective, LightNode light
         particleList[i].draw(view, perspective, light, cameraPos);
     }
 }
+
+inline void PBDObject::projectPositions(float dt)
+{
+    for (int i = 0; i < numParticles; i++)
+    {
+        projectedParticleList[i].pos = particleList[i].pos + particleList[i].vel * dt;
+    }
+}
+
+inline void PBDObject::projectConstraints(int simulationSteps)
+{
+    for (int i = 0; i < constraints.size(); i++)
+    {
+        constraints[i]->projectConstraint(simulationSteps);
+    }
+}
+
+inline void PBDObject::updateVelocities(float dt)
+{
+    for (int i = 0; i < numParticles; i++)
+    {
+        particleList[i].vel = (projectedParticleList[i].pos - particleList[i].pos) * (1 / dt);
+    }
+}
+
+inline void PBDObject::updatePositions()
+{
+    for (int i = 0; i < numParticles; i++)
+    {
+        particleList[i].pos = projectedParticleList[i].pos;
+    }
+}
+
 
 inline PBDObject PBDObject::getBox(int w, int h, int d, float invDensity)
 {

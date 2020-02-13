@@ -1,4 +1,5 @@
 #include "Constraints.h"
+#include "PBDObject.h"
 #include <cmath>
 
 DistanceConstraint::DistanceConstraint(int i1, int i2, PBDObject* obj)
@@ -25,6 +26,6 @@ void DistanceConstraint::projectConstraint(int simulationSteps)
     float currentDistance = (parent->projectedParticleList[indices[0]].pos - parent->projectedParticleList[indices[1]].pos).length();
     Vector4D corr = ((parent->projectedParticleList[indices[0]].pos - parent->projectedParticleList[indices[1]].pos) * (1 / currentDistance)) * -(invMass1 / (invMass1 + invMass2)) * (currentDistance - initialDistance);
     corr = corr * (1 - powf(1 - stiffness, 1 / simulationSteps));
-    parent->projectedParticleList[indices[0]].pos +=  corr;
-    parent->projectedParticleList[indices[0]].pos -=  corr;
+    parent->projectedParticleList[indices[0]].pos = parent->projectedParticleList[indices[0]].pos + corr;
+    parent->projectedParticleList[indices[0]].pos = parent->projectedParticleList[indices[0]].pos - corr;
 }
