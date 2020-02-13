@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Particle.h"
 #include "Constraints.h"
+#include "Particle.h"
 
 class PBDObject
 {
@@ -11,11 +11,11 @@ public:
     void setParticleList(Particle* list, int length);
     void draw(Matrix4D view, Matrix4D perspective, LightNode light, Vector4D cameraPos);
     static PBDObject getBox(int w, int h, int d, float invDensity);
-
-private:
     int numParticles;
     Particle* particleList;
     Particle* projectedParticleList;
+
+private:
     std::vector<Constraint*> constraints;
 };
 
