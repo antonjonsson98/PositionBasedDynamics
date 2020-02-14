@@ -150,7 +150,7 @@ void MeshResource::loadFromFile(const char* filename)
 		else
 		{
 			// Line doesnt start with v, vn or vt. Read until next newline
-			fscanf(file, "%256[^\n]\n");
+			fscanf(file, "%*256[^\n]\n");
 		}
 
 	}
