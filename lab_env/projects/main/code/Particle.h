@@ -9,6 +9,7 @@ public:
     Particle();
     ~Particle();
     float mass;
+    float radius;
     Vector4D pos;
     Vector4D vel;
     void draw(Matrix4D view, Matrix4D perspective, LightNode light, Vector4D cameraPos);
@@ -23,6 +24,7 @@ inline Particle::Particle()
     pos = Vector4D();
     vel = Vector4D();
     mass = 0.1f;
+    radius = 0.25f;
 
 }
 

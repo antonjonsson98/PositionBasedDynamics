@@ -25,3 +25,16 @@ private:
     float invMass2;
     float initialDistance;
 };
+
+class CollisionConstraint : public Constraint
+{
+public:
+    CollisionConstraint(int i1, int i2, PBDObject* obj1, PBDObject* obj2);
+    ~CollisionConstraint();
+    void projectConstraint(int simulationSteps);
+private:
+    PBDObject* parent2;
+    float invMass1;
+    float invMass2;
+    float minDistance;
+};
