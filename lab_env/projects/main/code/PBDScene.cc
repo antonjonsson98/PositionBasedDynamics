@@ -62,7 +62,7 @@ void
 PBDScene::Run()
 {
 	PBDSolver solver = PBDSolver();
-	PBDObject* object = PBDObject::getBox(2, 1, 1, 0.5f);
+	PBDObject* object = PBDObject::getBox(7, 7, 7, 0.5f);
 	solver.addObject(object);
 
 
@@ -72,7 +72,7 @@ PBDScene::Run()
 
 	glEnable(GL_DEPTH_TEST);
 
-	Vector4D cameraPos = Vector4D(0, 0, 4);
+	Vector4D cameraPos = Vector4D(0, 0, 5);
 	Vector4D cameraFront = Vector4D(0, 0, -1);
 	Vector4D cameraUp = Vector4D(0, 1, 0);
 

@@ -86,6 +86,7 @@ inline PBDObject* PBDObject::getBox(int w, int h, int d, float invDensity)
 
     Particle* list = new Particle[w * h * d];
 
+    // Set position of each particle in box
     for (int i = 0; i < w; i++)
     {
         for (int j = 0; j < h; j++)
@@ -98,10 +99,56 @@ inline PBDObject* PBDObject::getBox(int w, int h, int d, float invDensity)
     }
 
     ret->setParticleList(list, w * h * d);
+    
+    // Add disance constraint to each particle in box
+    for (int i = 0; i < w; i++)
+    {
+        for (int j = 0; j < h; j++)
+        {
+            for (int k = 0; k < d; k++)
+            {
+                // Add width distance constraints
+                if (i != w - 1)
+                {
+                    ret->constraints.push_back(new DistanceConstraint(k * (w*h) + j * w + i, k * (w*h) + j * w + i + 1, ret));
+                }
+                // Add height distance constraints
+                if (j != h - 1)
+                {
+                    ret->constraints.push_back(new DistanceConstraint(k * (w*h) + j * w + i, k * (w*h) + (j+1) * w + i, ret));
+                }
+                // Add depth distance constraints
+                if (k != d - 1)
+                {
+                    ret->constraints.push_back(new DistanceConstraint(k * (w*h) + j * w + i, (k+1) * (w*h) + j * w + i, ret));
+                }
+                // Add xy diagonal disance constraints
+                if (i != w - 1 && j != h - 1)
+                {
+                    ret->constraints.push_back(new DistanceConstraint(k * (w*h) + j * w + i, k * (w*h) + (j+1) * w + i + 1, ret));
+                }
+                // Add xz diagonal disance constraints
+                if (i != w - 1 && k != d - 1)
+                {
+                    ret->constraints.push_back(new DistanceConstraint(k * (w*h) + j * w + i, (k+1) * (w*h) + j * w + i + 1, ret));
+                }
+                // Add yz diagonal disance constraints
+                if (j != h - 1 && k != d - 1)
+                {
+                    ret->constraints.push_back(new DistanceConstraint(k * (w*h) + j * w + i, (k+1) * (w*h) + (j+1) * w + i, ret));
+                }
+                // Add xyz diagonal disance constraints
+                if (i != w - 1 && j != h - 1 && k != d - 1)
+                {
+                    ret->constraints.push_back(new DistanceConstraint(k * (w*h) + j * w + i, (k+1) * (w*h) + (j+1) * w + i + 1, ret));
+                }
+                
+            }
+        }    
+    }
+    
 
-    ret->particleList[0].vel = Vector4D(1, 0, 0);
-
-    ret->constraints.push_back(new DistanceConstraint(0, 1, ret));
+    ret->particleList[0].vel = Vector4D(100, 0, 0);
 
     return ret;
 }

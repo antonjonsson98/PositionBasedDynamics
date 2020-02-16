@@ -8,7 +8,7 @@ DistanceConstraint::DistanceConstraint(int i1, int i2, PBDObject* obj)
     indices = new int[numIndices];
     indices[0] = i1;
     indices[1] = i2;
-    stiffness = 0.005f;
+    stiffness = 0.5f;
     equality = true;
     parent = obj;
     invMass1 = 1 / parent->particleList[indices[0]].mass;
