@@ -18,9 +18,9 @@ public:
     int numParticles;
     Particle* particleList;
     Particle* projectedParticleList;
+    std::vector<Constraint*> constraints;
 
 private:
-    std::vector<Constraint*> constraints;
 };
 
 inline PBDObject::PBDObject()

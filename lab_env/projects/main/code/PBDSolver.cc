@@ -11,6 +11,7 @@ PBDSolver::~PBDSolver()
 
 void PBDSolver::addObject(PBDObject* obj)
 {
+    particleAmount += obj->numParticles;
     objectList.push_back(obj);
 }
 
@@ -45,8 +46,34 @@ void PBDSolver::projectPositions(float dt)
 }
 
 void PBDSolver::generateCollisionConstraints(float dt)
-{
+{   
+    for (int i = 0; i < objectList.size(); i++)
+    {
+        for (int j = i; j < objectList.size(); j++)
+        {
+            for (int k = 0; k < objectList[i]->numParticles; k++)
+            {
+                for (int l = 0; l < objectList[j]->numParticles; l++)
+                {
+                    if (i == j && k == l)
+                    {
+                        continue;
+                    }
+                    
+                    if ((objectList[i]->particleList[k].pos - objectList[j]->particleList[l].pos).length() < objectList[i]->particleList[k].radius + objectList[j]->particleList[l].radius)
+                    {
+                        objectList[i]->constraints.push_back(new CollisionConstraint(k, l, objectList[i], objectList[j]));
+                    }
+                    
 
+                }
+                
+            }
+            
+        }
+        
+    }
+    
 }
 
 void PBDSolver::projectConstraints(float dt)

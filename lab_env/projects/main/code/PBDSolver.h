@@ -20,4 +20,5 @@ public:
 private:
     int solverSteps;
     std::vector<PBDObject*> objectList;
+    int particleAmount = 0;
 };
