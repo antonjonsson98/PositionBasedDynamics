@@ -6,11 +6,13 @@ class Constraint
 {
 public:
     virtual void projectConstraint(int simulationSteps) = 0;
+    virtual ~Constraint();
+    // Bool that determines if constraint should be removed at the end of solver cycle
+    bool oneTime;
 protected:
     int numIndices;
     int* indices;
-    float stiffness;
-    bool equality;
+    float stiffness; 
     PBDObject* parent;
 };
 

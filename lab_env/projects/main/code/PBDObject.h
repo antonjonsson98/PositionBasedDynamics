@@ -12,6 +12,7 @@ public:
     void draw(Matrix4D view, Matrix4D perspective, LightNode light, Vector4D cameraPos);
     void projectPositions(float dt);
     void projectConstraints(int simulationSteps);
+    void deleteOneTimeConstraints();
     void updateVelocities(float dt);
     void updatePositions();
     static PBDObject* getBox(int w, int h, int d, float invDensity);
@@ -60,6 +61,18 @@ inline void PBDObject::projectConstraints(int simulationSteps)
     for (int i = 0; i < constraints.size(); i++)
     {
         constraints[i]->projectConstraint(simulationSteps);
+    }
+}
+
+inline void PBDObject::deleteOneTimeConstraints()
+{
+    for (int i = constraints.size() - 1; i >= 0; i--)
+    {
+        if (constraints[i]->oneTime)
+        {
+            delete constraints[i];
+            constraints.erase(constraints.begin() + i);
+        }
     }
 }
 

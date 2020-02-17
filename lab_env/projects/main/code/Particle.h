@@ -24,7 +24,7 @@ inline Particle::Particle()
     pos = Vector4D();
     vel = Vector4D();
     mass = 0.1f;
-    radius = 0.25f;
+    radius = 0.2f;
 
 }
 

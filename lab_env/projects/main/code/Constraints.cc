@@ -2,6 +2,11 @@
 #include "PBDObject.h"
 #include <cmath>
 
+Constraint::~Constraint()
+{
+    
+}
+
 DistanceConstraint::DistanceConstraint(int i1, int i2, PBDObject* obj)
 {
     numIndices = 2;
@@ -9,7 +14,7 @@ DistanceConstraint::DistanceConstraint(int i1, int i2, PBDObject* obj)
     indices[0] = i1;
     indices[1] = i2;
     stiffness = 0.5f;
-    equality = true;
+    oneTime = false;
     parent = obj;
     invMass1 = 1 / parent->particleList[indices[0]].mass;
     invMass2 = 1 / parent->particleList[indices[1]].mass;
@@ -37,7 +42,7 @@ CollisionConstraint::CollisionConstraint(int i1, int i2, PBDObject* obj1, PBDObj
     indices[0] = i1;
     indices[1] = i2;
     stiffness = 1;
-    equality = true;
+    oneTime = true;
     parent = obj1;
     parent2 = obj2;
     invMass1 = 1 / parent->particleList[indices[0]].mass;

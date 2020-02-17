@@ -80,11 +80,17 @@ void PBDSolver::projectConstraints(float dt)
 {
     for (int i = 0; i < solverSteps; i++)
     {
-        for (int i = 0; i < objectList.size(); i++)
+        for (int j = 0; j < objectList.size(); j++)
         {
-            objectList[i]->projectConstraints(solverSteps);
+            objectList[j]->projectConstraints(solverSteps);
         }
     }
+
+    for (int i = 0; i < objectList.size(); i++)
+    {
+            objectList[i]->deleteOneTimeConstraints();
+    }
+    
 }
 
 void PBDSolver::updateVelocities(float dt)
