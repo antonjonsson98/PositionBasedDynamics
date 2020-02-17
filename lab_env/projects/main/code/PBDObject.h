@@ -15,13 +15,19 @@ public:
     void deleteOneTimeConstraints();
     void updateVelocities(float dt);
     void updatePositions();
-    static PBDObject* getBox(int w, int h, int d, float invDensity);
+    void addForce(Vector4D force);
+    void applyForces(float dt);
     int numParticles;
     Particle* particleList;
     Particle* projectedParticleList;
     std::vector<Constraint*> constraints;
+    // True if object is affected by gravity
+    bool gravity = true;
+    static PBDObject* getBox(Vector4D pos, int w, int h, int d, float invDensity);
 
 private:
+    // Forces to be applied next solver iteration
+    std::vector<Vector4D> forceList;
 };
 
 inline PBDObject::PBDObject()
@@ -92,8 +98,24 @@ inline void PBDObject::updatePositions()
     }
 }
 
+inline void PBDObject::addForce(Vector4D force)
+{
+    forceList.push_back(force);
+}
 
-inline PBDObject* PBDObject::getBox(int w, int h, int d, float invDensity)
+inline void PBDObject::applyForces(float dt)
+{
+    for (int i = 0; i < forceList.size(); i++)
+    {
+        for (int j = 0; j < numParticles; j++)
+        {
+            particleList[j].vel = particleList[j].vel + (forceList[i] * (1/particleList[j].mass)) * dt;
+        }
+    }
+    forceList.clear();
+}
+
+inline PBDObject* PBDObject::getBox(Vector4D pos, int w, int h, int d, float invDensity)
 {
     PBDObject* ret = new PBDObject();
 
@@ -106,7 +128,7 @@ inline PBDObject* PBDObject::getBox(int w, int h, int d, float invDensity)
         {
             for (int k = 0; k < d; k++)
             {
-                list[k * (w*h) + j * w + i].pos = Vector4D(-invDensity * (w / 2) + invDensity * i, -invDensity * (h / 2) + invDensity * j, -invDensity * (d / 2) + invDensity * k);
+                list[k * (w*h) + j * w + i].pos = pos + Vector4D(-invDensity * (w / 2) + invDensity * i, -invDensity * (h / 2) + invDensity * j, -invDensity * (d / 2) + invDensity * k);
             }
         }    
     }
@@ -155,13 +177,9 @@ inline PBDObject* PBDObject::getBox(int w, int h, int d, float invDensity)
                 {
                     ret->constraints.push_back(new DistanceConstraint(k * (w*h) + j * w + i, (k+1) * (w*h) + (j+1) * w + i + 1, ret));
                 }
-                
             }
         }    
     }
-    
-
-    ret->particleList[0].vel = Vector4D(100, 0, 0);
 
     return ret;
 }

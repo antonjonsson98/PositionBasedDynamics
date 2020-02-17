@@ -62,8 +62,12 @@ void
 PBDScene::Run()
 {
 	PBDSolver solver = PBDSolver();
-	PBDObject* object = PBDObject::getBox(7, 7, 7, 0.5f);
+	PBDObject* object = PBDObject::getBox(Vector4D(-10, 0, 0), 7, 7, 7, 0.5f);
+	object->addForce(Vector4D(20, 0, 0));
 	solver.addObject(object);
+	PBDObject* object2 = PBDObject::getBox(Vector4D(10, 0, 0), 7, 7, 7, 0.5f);
+	object2->addForce(Vector4D(-20, 0, 0));
+	solver.addObject(object2);
 
 
     LightNode lightNode = LightNode(Vector4D(0, 10, 0), Vector4D(1, 1, 1), 1);
@@ -72,7 +76,7 @@ PBDScene::Run()
 
 	glEnable(GL_DEPTH_TEST);
 
-	Vector4D cameraPos = Vector4D(0, 0, 5);
+	Vector4D cameraPos = Vector4D(0, 0, 13);
 	Vector4D cameraFront = Vector4D(0, 0, -1);
 	Vector4D cameraUp = Vector4D(0, 1, 0);
 
@@ -97,6 +101,7 @@ PBDScene::Run()
 		solver.simulateTimeStep(0.0167f);
 
 		object->draw(view, perspective, lightNode, cameraPos);
+		object2->draw(view, perspective, lightNode, cameraPos);
 
 		this->window->SwapBuffers();
 

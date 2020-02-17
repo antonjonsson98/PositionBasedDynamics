@@ -2,7 +2,7 @@
 
 PBDSolver::PBDSolver()
 {
-    solverSteps = 100;
+    solverSteps = 10;
 }
 
 PBDSolver::~PBDSolver()
@@ -29,7 +29,10 @@ void PBDSolver::simulateTimeStep(float dt)
 
 void PBDSolver::applyExternalForces(float dt)
 {
-
+    for (int i = 0; i < objectList.size(); i++)
+    {
+        objectList[i]->applyForces(dt);
+    }
 }
 
 void PBDSolver::dampVelocities(float dt)
