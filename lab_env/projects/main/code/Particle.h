@@ -8,7 +8,7 @@ class Particle
 public:
     Particle();
     ~Particle();
-    float mass;
+    float invMass;
     float radius;
     Vector4D pos;
     Vector4D vel;
@@ -23,7 +23,7 @@ inline Particle::Particle()
     sphere.setup();
     pos = Vector4D();
     vel = Vector4D();
-    mass = 0.1f;
+    invMass = 10.0f;
     radius = 0.2f;
 
 }

@@ -109,7 +109,7 @@ inline void PBDObject::applyForces(float dt)
     {
         for (int j = 0; j < numParticles; j++)
         {
-            particleList[j].vel = particleList[j].vel + (forceList[i] * (1/particleList[j].mass)) * dt;
+            particleList[j].vel = particleList[j].vel + (forceList[i] * particleList[j].invMass) * dt;
         }
     }
     forceList.clear();
