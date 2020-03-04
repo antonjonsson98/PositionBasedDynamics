@@ -10,16 +10,16 @@ public:
     // Bool that determines if constraint should be removed at the end of solver cycle
     bool oneTime;
 protected:
+    float stiffness; 
     int numIndices;
     int* indices;
-    float stiffness; 
     PBDObject* parent;
 };
 
 class DistanceConstraint : public Constraint
 {
 public:
-    DistanceConstraint(int i1, int i2, PBDObject* obj);
+    DistanceConstraint(int i1, int i2, PBDObject* obj, float stiffness);
     ~DistanceConstraint();
     void projectConstraint(int simulationSteps);
 private:

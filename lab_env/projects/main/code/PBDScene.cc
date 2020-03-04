@@ -62,11 +62,11 @@ void
 PBDScene::Run()
 {
 	PBDSolver solver = PBDSolver();
-	SoftBodyObject object = SoftBodyObject(Vector4D(-10, 0, 0), 7, 7, 7, 0.5f, 200.0f, 0.7f);
-	object.addForce(Vector4D(100, 0, 0));
+	SoftBodyObject object = SoftBodyObject(Vector4D(-10, 0, 0), 7, 7, 7, 0.5f, 20.0f, 0.5f);
+	object.addForce(Vector4D(15, 0, 0));
 	solver.addObject((PBDObject*)&object);
-	SoftBodyObject object2 = SoftBodyObject(Vector4D(10, 0, 0), 7, 7, 7, 0.5f, 10.0f, 0.7f);
-	object2.addForce(Vector4D(-5, 0, 0));
+	SoftBodyObject object2 = SoftBodyObject(Vector4D(10, 0, 0), 4, 2, 2, 0.5f, 15.0f, 0.7f);
+	//object2.addForce(Vector4D(-10, 0, 0));
 	solver.addObject((PBDObject*)&object2);
 
 
@@ -76,7 +76,7 @@ PBDScene::Run()
 
 	glEnable(GL_DEPTH_TEST);
 
-	Vector4D cameraPos = Vector4D(0, 0, 13);
+	Vector4D cameraPos = Vector4D(10, 0, 13);
 	Vector4D cameraFront = Vector4D(0, 0, -1);
 	Vector4D cameraUp = Vector4D(0, 1, 0);
 

@@ -7,13 +7,13 @@ Constraint::~Constraint()
 
 }
 
-DistanceConstraint::DistanceConstraint(int i1, int i2, PBDObject* obj)
+DistanceConstraint::DistanceConstraint(int i1, int i2, PBDObject* obj, float stiffness)
 {
     numIndices = 2;
     indices = new int[numIndices];
     indices[0] = i1;
     indices[1] = i2;
-    stiffness = 0.7f;
+    this->stiffness = stiffness;
     oneTime = false;
     parent = obj;
     invMass1 = parent->particleList[indices[0]].invMass;
