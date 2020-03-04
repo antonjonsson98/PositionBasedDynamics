@@ -63,7 +63,7 @@ void PBDSolver::generateCollisionConstraints(float dt)
                         continue;
                     }
                     
-                    if ((objectList[i]->particleList[k].pos - objectList[j]->particleList[l].pos).length() < objectList[i]->particleList[k].radius + objectList[j]->particleList[l].radius)
+                    if ((objectList[i]->particleList[k].pos - objectList[j]->particleList[l].pos).length() < objectList[i]->particleList[k].radius * 2 + objectList[j]->particleList[l].radius * 2)
                     {
                         objectList[i]->constraints.push_back(new CollisionConstraint(k, l, objectList[i], objectList[j]));
                     }

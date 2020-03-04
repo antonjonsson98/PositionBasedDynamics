@@ -29,10 +29,9 @@ DistanceConstraint::~DistanceConstraint()
 void DistanceConstraint::projectConstraint(int simulationSteps)
 {
     float currentDistance = (parent->projectedParticleList[indices[0]].pos - parent->projectedParticleList[indices[1]].pos).length();
-    Vector4D corr = ((parent->projectedParticleList[indices[0]].pos - parent->projectedParticleList[indices[1]].pos) * (1 / currentDistance)) * -(invMass1 / (invMass1 + invMass2)) * (currentDistance - initialDistance);
-    corr = corr * (1 - powf(1 - stiffness, 1.0f / simulationSteps));
-    parent->projectedParticleList[indices[0]].pos = parent->projectedParticleList[indices[0]].pos + corr;
-    parent->projectedParticleList[indices[1]].pos = parent->projectedParticleList[indices[1]].pos - corr;
+    Vector4D corr = ((parent->projectedParticleList[indices[0]].pos - parent->projectedParticleList[indices[1]].pos) * (1 / currentDistance)) * (currentDistance - initialDistance);
+    parent->projectedParticleList[indices[0]].pos = parent->projectedParticleList[indices[0]].pos + corr * -(invMass1 / (invMass1 + invMass2)) * (1 - powf(1 - stiffness, 1.0f / simulationSteps));;
+    parent->projectedParticleList[indices[1]].pos = parent->projectedParticleList[indices[1]].pos + corr * (invMass2 / (invMass1 + invMass2)) * (1 - powf(1 - stiffness, 1.0f / simulationSteps));;
 }
 
 CollisionConstraint::CollisionConstraint(int i1, int i2, PBDObject* obj1, PBDObject* obj2)
@@ -60,9 +59,9 @@ void CollisionConstraint::projectConstraint(int simulationSteps)
     float currentDistance = (parent->projectedParticleList[indices[0]].pos - parent2->projectedParticleList[indices[1]].pos).length();
     if (currentDistance < minDistance)
     {
-        Vector4D corr = ((parent->projectedParticleList[indices[0]].pos - parent2->projectedParticleList[indices[1]].pos) * (1 / currentDistance)) * -(invMass1 / (invMass1 + invMass2)) * (currentDistance - minDistance);
+        Vector4D corr = ((parent->projectedParticleList[indices[0]].pos - parent2->projectedParticleList[indices[1]].pos) * (1 / currentDistance)) * (currentDistance - minDistance);
         //corr = corr * (1 - powf(1 - stiffness, 1.0f / simulationSteps));
-        parent->projectedParticleList[indices[0]].pos = parent->projectedParticleList[indices[0]].pos + corr;
-        parent2->projectedParticleList[indices[1]].pos = parent2->projectedParticleList[indices[1]].pos - corr;
+        parent->projectedParticleList[indices[0]].pos = parent->projectedParticleList[indices[0]].pos + corr * -(invMass1 / (invMass1 + invMass2));
+        parent2->projectedParticleList[indices[1]].pos = parent2->projectedParticleList[indices[1]].pos + corr * (invMass2 / (invMass1 + invMass2));
     } 
 }
