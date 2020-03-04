@@ -62,12 +62,12 @@ void
 PBDScene::Run()
 {
 	PBDSolver solver = PBDSolver();
-	PBDObject* object = PBDObject::getBox(Vector4D(-10, 0, 0), 7, 7, 7, 0.5f);
-	object->addForce(Vector4D(20, 0, 0));
-	solver.addObject(object);
-	PBDObject* object2 = PBDObject::getBox(Vector4D(10, 0, 0), 7, 7, 7, 0.5f);
-	object2->addForce(Vector4D(-20, 0, 0));
-	solver.addObject(object2);
+	SoftBodyObject object = SoftBodyObject(Vector4D(-10, 0, 0), 7, 7, 7, 0.5f, 0.7f);
+	object.addForce(Vector4D(20, 0, 0));
+	solver.addObject((PBDObject*)&object);
+	SoftBodyObject object2 = SoftBodyObject(Vector4D(10, 0, 0), 7, 7, 7, 0.5f, 0.7f);
+	object2.addForce(Vector4D(-20, 0, 0));
+	solver.addObject((PBDObject*)&object2);
 
 
     LightNode lightNode = LightNode(Vector4D(0, 10, 0), Vector4D(1, 1, 1), 1);
@@ -100,8 +100,8 @@ PBDScene::Run()
 
 		solver.simulateTimeStep(0.0167f);
 
-		object->draw(view, perspective, lightNode, cameraPos);
-		object2->draw(view, perspective, lightNode, cameraPos);
+		object.draw(view, perspective, lightNode, cameraPos);
+		object2.draw(view, perspective, lightNode, cameraPos);
 
 		this->window->SwapBuffers();
 
