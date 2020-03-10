@@ -32,6 +32,11 @@ void PBDSolver::applyExternalForces(float dt)
     for (int i = 0; i < objectList.size(); i++)
     {
         objectList[i]->applyForces(dt);
+        
+        if (objectList[i]->gravity)
+        {
+            objectList[i]->applyGravity(dt);
+        }
     }
 }
 

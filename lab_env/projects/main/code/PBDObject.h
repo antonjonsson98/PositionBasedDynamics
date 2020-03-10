@@ -17,6 +17,7 @@ public:
     void updatePositions();
     void addForce(Vector4D force);
     void applyForces(float dt);
+    void applyGravity(float dt);
     int numParticles;
     Particle* particleList;
     Particle* projectedParticleList;
@@ -113,4 +114,15 @@ inline void PBDObject::applyForces(float dt)
         }
     }
     forceList.clear();
+}
+
+inline void PBDObject::applyGravity(float dt)
+{
+    for (int i = 0; i < numParticles; i++)
+    {
+        if (particleList[i].invMass != 0)
+        {
+            particleList[i].vel = particleList[i].vel + Vector4D(0, -0.98f * dt, 0);
+        }
+    }
 }

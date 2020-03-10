@@ -14,7 +14,7 @@ DistanceConstraint::DistanceConstraint(int i1, int i2, PBDObject* obj, float sti
     indices[0] = i1;
     indices[1] = i2;
     this->stiffness = stiffness;
-    strength = 1.04f;
+    strength = 1.2f;
     oneTime = false;
     parent = obj;
     invMass1 = parent->particleList[indices[0]].invMass;
