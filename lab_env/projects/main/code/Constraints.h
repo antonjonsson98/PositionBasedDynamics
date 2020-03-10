@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Vector4D.h"
+
 class PBDObject;
 
 class Constraint
@@ -43,12 +45,13 @@ private:
     float minDistance;
 };
 
-class HeightConstraint : public Constraint
+class BoundsConstraint : public Constraint
 {
 public:
-    HeightConstraint(int i, PBDObject* obj, float height);
-    ~HeightConstraint();
+    BoundsConstraint(int i, PBDObject* obj);
+    ~BoundsConstraint();
     void projectConstraint(int simulationSteps);
 private:
-    float height;
+    Vector4D min;
+    Vector4D max;
 };

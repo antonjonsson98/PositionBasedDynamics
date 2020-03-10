@@ -1,5 +1,6 @@
 #include "Constraints.h"
 #include "PBDObject.h"
+#include "Vector4D.h"
 #include <cmath>
 
 Constraint::~Constraint()
@@ -86,7 +87,7 @@ void CollisionConstraint::projectConstraint(int simulationSteps)
     } 
 }
 
-HeightConstraint::HeightConstraint(int i, PBDObject* obj, float height)
+BoundsConstraint::BoundsConstraint(int i, PBDObject* obj)
 {
     numIndices = 1;
     indices = new int[numIndices];
@@ -94,18 +95,43 @@ HeightConstraint::HeightConstraint(int i, PBDObject* obj, float height)
     stiffness = 1;
     oneTime = false;
     parent = obj;
-    this->height = height;
+    min = Vector4D(-15, -5, -15);
+    max = Vector4D(15, 15, 15);
 }
 
-HeightConstraint::~HeightConstraint()
+BoundsConstraint::~BoundsConstraint()
 {
     delete[] indices;
 }
 
-void HeightConstraint::projectConstraint(int simulationSteps)
+void BoundsConstraint::projectConstraint(int simulationSteps)
 {
-    if (parent->projectedParticleList[indices[0]].pos[1] < height)
+    if (parent->projectedParticleList[indices[0]].pos[0] < min[0])
     {
-        parent->projectedParticleList[indices[0]].pos[1] = height;
-    } 
+        parent->projectedParticleList[indices[0]].pos[0] = min[0];
+    }
+    else if (parent->projectedParticleList[indices[0]].pos[0] > max[0])
+    {
+        parent->projectedParticleList[indices[0]].pos[0] = max[0];
+    }
+
+    if (parent->projectedParticleList[indices[0]].pos[1] < min[1])
+    {
+        parent->projectedParticleList[indices[0]].pos[1] = min[1];
+    }
+    else if (parent->projectedParticleList[indices[0]].pos[1] > max[1])
+    {
+        parent->projectedParticleList[indices[0]].pos[1] = max[1];
+    }
+
+    if (parent->projectedParticleList[indices[0]].pos[2] < min[2])
+    {
+        parent->projectedParticleList[indices[0]].pos[2] = min[2];
+    }
+    else if (parent->projectedParticleList[indices[0]].pos[2] > max[2])
+    {
+        parent->projectedParticleList[indices[0]].pos[2] = max[2];
+    }
+
+    
 }

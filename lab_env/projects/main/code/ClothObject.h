@@ -82,7 +82,7 @@ inline ClothObject::ClothObject(Vector4D pos, int w, int h, int d, float invDens
                     constraints.push_back(new DistanceConstraint(k * (w*h) + j * w + i, (k+1) * (w*h) + (j+1) * w + i + 1, this, stiffness));
                 }
 
-                constraints.push_back(new HeightConstraint(k * (w*h) + j * w + i, this, -5));
+                constraints.push_back(new BoundsConstraint(k * (w*h) + j * w + i, this));
             }
         }    
     }
