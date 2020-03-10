@@ -9,6 +9,7 @@
 #include "LightNode.h"
 #include "PBDSolver.h"
 #include "SoftBodyObject.h"
+#include "ClothObject.h"
 #include "imgui.h"
 #include "imgui_impl_glfw_gl3.h"
 
