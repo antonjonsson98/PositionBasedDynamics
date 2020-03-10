@@ -62,10 +62,10 @@ void
 PBDScene::Run()
 {
 	PBDSolver solver = PBDSolver();
-	SoftBodyObject object = SoftBodyObject(Vector4D(-10, 0, 0), 7, 7, 7, 0.5f, 20.0f, 0.5f);
-	object.addForce(Vector4D(15, 0, 0));
+	SoftBodyObject object = SoftBodyObject(Vector4D(-10, 0, 0), 5, 5, 5, 0.5f, 40.0f, 0.5f);
+	object.addForce(Vector4D(40, 0, 0));
 	solver.addObject((PBDObject*)&object);
-	SoftBodyObject object2 = SoftBodyObject(Vector4D(10, 0, 0), 4, 2, 2, 0.5f, 15.0f, 0.7f);
+	SoftBodyObject object2 = SoftBodyObject(Vector4D(10, 0, 0), 1, 13, 13, 0.5f, 15.0f, 0.7f);
 	//object2.addForce(Vector4D(-10, 0, 0));
 	solver.addObject((PBDObject*)&object2);
 

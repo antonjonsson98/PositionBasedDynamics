@@ -26,6 +26,8 @@ private:
     float invMass1;
     float invMass2;
     float initialDistance;
+    // Strength indicates to how much of original distance stretching is allowed before breaking
+    float strength;
 };
 
 class CollisionConstraint : public Constraint

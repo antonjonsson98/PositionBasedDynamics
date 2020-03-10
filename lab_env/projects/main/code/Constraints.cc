@@ -14,6 +14,7 @@ DistanceConstraint::DistanceConstraint(int i1, int i2, PBDObject* obj, float sti
     indices[0] = i1;
     indices[1] = i2;
     this->stiffness = stiffness;
+    strength = 1.04f;
     oneTime = false;
     parent = obj;
     invMass1 = parent->particleList[indices[0]].invMass;
@@ -29,6 +30,13 @@ DistanceConstraint::~DistanceConstraint()
 void DistanceConstraint::projectConstraint(int simulationSteps)
 {
     float currentDistance = (parent->projectedParticleList[indices[0]].pos - parent->projectedParticleList[indices[1]].pos).length();
+    
+    if ((currentDistance / initialDistance) > strength)
+    {
+        // Break constraint by setting it to remove after this cycle
+        oneTime = true;
+    }
+    
     Vector4D corr = ((parent->projectedParticleList[indices[0]].pos - parent->projectedParticleList[indices[1]].pos) * (1 / currentDistance)) * (currentDistance - initialDistance);
     parent->projectedParticleList[indices[0]].pos = parent->projectedParticleList[indices[0]].pos + corr * -(invMass1 / (invMass1 + invMass2)) * (1 - powf(1 - stiffness, 1.0f / simulationSteps));;
     parent->projectedParticleList[indices[1]].pos = parent->projectedParticleList[indices[1]].pos + corr * (invMass2 / (invMass1 + invMass2)) * (1 - powf(1 - stiffness, 1.0f / simulationSteps));;
