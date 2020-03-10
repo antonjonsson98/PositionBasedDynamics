@@ -42,3 +42,13 @@ private:
     float invMass2;
     float minDistance;
 };
+
+class HeightConstraint : public Constraint
+{
+public:
+    HeightConstraint(int i, PBDObject* obj, float height);
+    ~HeightConstraint();
+    void projectConstraint(int simulationSteps);
+private:
+    float height;
+};

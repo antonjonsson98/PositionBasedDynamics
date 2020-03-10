@@ -85,3 +85,27 @@ void CollisionConstraint::projectConstraint(int simulationSteps)
         parent2->projectedParticleList[indices[1]].pos = parent2->projectedParticleList[indices[1]].pos + corr * (invMass2 / (invMass1 + invMass2));
     } 
 }
+
+HeightConstraint::HeightConstraint(int i, PBDObject* obj, float height)
+{
+    numIndices = 1;
+    indices = new int[numIndices];
+    indices[0] = i;
+    stiffness = 1;
+    oneTime = false;
+    parent = obj;
+    this->height = height;
+}
+
+HeightConstraint::~HeightConstraint()
+{
+    delete[] indices;
+}
+
+void HeightConstraint::projectConstraint(int simulationSteps)
+{
+    if (parent->projectedParticleList[indices[0]].pos[1] < height)
+    {
+        parent->projectedParticleList[indices[0]].pos[1] = height;
+    } 
+}
