@@ -32,6 +32,18 @@ private:
     float strength;
 };
 
+class FluidDistanceConstraint : public Constraint
+{
+public:
+    FluidDistanceConstraint(int i1, int i2, PBDObject* obj);
+    ~FluidDistanceConstraint();
+    void projectConstraint(int simulationSteps);
+private:
+    float invMass1;
+    float invMass2;
+    float initialDistance;
+};
+
 class CollisionConstraint : public Constraint
 {
 public:
@@ -55,3 +67,4 @@ private:
     Vector4D min;
     Vector4D max;
 };
+

@@ -2,7 +2,7 @@
 
 PBDSolver::PBDSolver()
 {
-    solverSteps = 2;
+    solverSteps = 5;
 }
 
 PBDSolver::~PBDSolver()
@@ -68,6 +68,15 @@ void PBDSolver::generateCollisionConstraints(float dt)
                         continue;
                     }
                     
+                    if (i == j && objectList[i]->isFluid)
+                    {
+                        if ((objectList[i]->particleList[k].pos - objectList[j]->particleList[l].pos).length() < objectList[i]->particleList[k].radius * 1.5f + objectList[j]->particleList[l].radius * 1.5f)
+                        {
+                            objectList[i]->constraints.push_back(new FluidDistanceConstraint(k, l, objectList[i]));
+                        }
+                    }
+                    
+
                     if ((objectList[i]->particleList[k].pos - objectList[j]->particleList[l].pos).length() < objectList[i]->particleList[k].radius + objectList[j]->particleList[l].radius)
                     {
                         objectList[i]->constraints.push_back(new CollisionConstraint(k, l, objectList[i], objectList[j]));

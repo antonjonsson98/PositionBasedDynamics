@@ -55,6 +55,35 @@ void DistanceConstraint::projectConstraint(int simulationSteps)
     parent->projectedParticleList[indices[1]].pos = parent->projectedParticleList[indices[1]].pos + corr * (invMass2 / (invMass1 + invMass2)) * (1 - powf(1 - stiffness, 1.0f / simulationSteps));;
 }
 
+FluidDistanceConstraint::FluidDistanceConstraint(int i1, int i2, PBDObject* obj)
+{
+    numIndices = 2;
+    indices = new int[numIndices];
+    indices[0] = i1;
+    indices[1] = i2;
+    stiffness = 0.0005f;
+    oneTime = true;
+    parent = obj;
+    invMass1 = parent->particleList[indices[0]].invMass;
+    invMass2 = parent->particleList[indices[1]].invMass;
+    
+    initialDistance = parent->particleList[indices[0]].radius + parent->particleList[indices[1]].radius;
+}
+
+FluidDistanceConstraint::~FluidDistanceConstraint()
+{
+    delete[] indices;
+}
+
+void FluidDistanceConstraint::projectConstraint(int simulationSteps)
+{
+    float currentDistance = (parent->projectedParticleList[indices[0]].pos - parent->projectedParticleList[indices[1]].pos).length();
+    
+    Vector4D corr = ((parent->projectedParticleList[indices[0]].pos - parent->projectedParticleList[indices[1]].pos) * (1 / currentDistance)) * (currentDistance - initialDistance);
+    parent->projectedParticleList[indices[0]].pos = parent->projectedParticleList[indices[0]].pos + corr * -(invMass1 / (invMass1 + invMass2)) * (1 - powf(1 - stiffness, 1.0f / simulationSteps));;
+    parent->projectedParticleList[indices[1]].pos = parent->projectedParticleList[indices[1]].pos + corr * (invMass2 / (invMass1 + invMass2)) * (1 - powf(1 - stiffness, 1.0f / simulationSteps));;
+}
+
 CollisionConstraint::CollisionConstraint(int i1, int i2, PBDObject* obj1, PBDObject* obj2)
 {
     numIndices = 2;
@@ -95,8 +124,8 @@ BoundsConstraint::BoundsConstraint(int i, PBDObject* obj)
     stiffness = 1;
     oneTime = false;
     parent = obj;
-    min = Vector4D(-15, -5, -15);
-    max = Vector4D(15, 15, 15);
+    min = Vector4D(-5, -5, -5);
+    max = Vector4D(5, 10, 5);
 }
 
 BoundsConstraint::~BoundsConstraint()

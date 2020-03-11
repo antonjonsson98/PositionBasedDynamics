@@ -24,6 +24,7 @@ public:
     std::vector<Constraint*> constraints;
     // True if object is affected by gravity
     bool gravity = true;
+    bool isFluid = false;
     static PBDObject* getBox(Vector4D pos, int w, int h, int d, float invDensity);
 
 protected:
